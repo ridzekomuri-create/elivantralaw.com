@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Contacts — ELIVANTRA LAW{% endblock %}
+{% block content %}
+
+<section class="page-hero contacts-hero">
+  <div class="container">
+    <span class="eyebrow"><span class="t-ru">Контакты</span><span class="t-en" hidden>Contacts</span></span>
+    <h1 class="t-ru">Как с нами связаться</h1>
+    <h1 class="t-en" hidden>How to reach us</h1>
+    <p class="lede t-ru">Почта и формат работы — выберите удобный способ.</p>
+    <p class="lede t-en" hidden>Email and how we work — pick the channel that suits you.</p>
+  </div>
+</section>
+
+<section data-eyebrow-ru="Контакты" data-eyebrow-en="Contacts">
+  <div class="container contacts-page">
+    <div class="contact-info contacts-list reveal">
+      <div class="info-row">
+        <span class="label t-ru">Почта</span><span class="label t-en" hidden>Email</span>
+        <span class="val">elivantralaw@gmail.com
+          <span class="t-ru">ответ в течение 15 минут в рабочее время</span>
+          <span class="t-en" hidden>reply within 15 minutes during working hours</span>
+        </span>
+      </div>
+      <div class="info-row">
+        <span class="label t-ru">Формат</span><span class="label t-en" hidden>Format</span>
+        <span class="val">
+          <span class="t-ru">Удалённо и очно</span><span class="t-en" hidden>Remote &amp; in person</span>
+          <span class="t-ru">по предварительной записи</span>
+          <span class="t-en" hidden>by appointment</span>
+        </span>
+      </div>
+      <div class="info-row">
+        <span class="label t-ru">География</span><span class="label t-en" hidden>Geography</span>
+        <span class="val">
+          <span class="t-ru">Международная практика</span><span class="t-en" hidden>International practice</span>
+          <span class="t-ru">Европа · Азия · Ближний Восток</span>
+          <span class="t-en" hidden>Europe · Asia · Middle East</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="contacts-cta reveal">
+      <a href="{{ url_for('home') }}#contact" class="btn btn-primary">
+        <span class="t-ru">Обсудить проект</span><span class="t-en" hidden>Discuss a project</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "admin/base_admin.html" %}
+{% block content %}
+<div class="admin-header">
+  <div>
+    <h1>Отзывы</h1>
+    <p>Новые отзывы приходят со статусом «На проверке». Опубликуйте их, чтобы они появились на главной странице.</p>
+  </div>
+</div>
+
+<div class="card" style="padding:0;">
+  {% if items %}
+  <table>
+    <thead>
+      <tr><th>Автор</th><th>Отзыв</th><th>Статус</th><th>Получен</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for r in items %}
+      <tr>
+        <td>
+          {{ r.name }}
+          {% if r.country %}<div style="color:var(--a-text-soft)">{{ r.country }}</div>{% endif %}
+        </td>
+        <td style="max-width:420px">{{ r.text }}</td>
+        <td><span class="badge {{ 'on' if r.published else 'off' }}">{{ 'Опубликован' if r.published else 'На проверке' }}</span></td>
+        <td style="color:var(--a-text-soft)">{{ r.created_at.strftime('%d.%m.%Y') }}</td>
+        <td class="actions">
+          <form method="post" action="{{ url_for('admin.review_toggle', review_id=r.id) }}">
+            <button type="submit" class="btn btn-outline btn-small">{{ 'Скрыть' if r.published else 'Опубликовать' }}</button>
+          </form>
+          <form method="post" action="{{ url_for('admin.review_delete', review_id=r.id) }}" onsubmit="return confirm('Удалить отзыв от ' + {{ r.name|tojson }} + '?');">
+            <button type="submit" class="btn btn-danger btn-small">Удалить</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">Пока нет отзывов.</div>
+  {% endif %}
+</div>
+{% endblock %}

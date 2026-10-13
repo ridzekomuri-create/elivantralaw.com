@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Новости — ELIVANTRA LAW{% endblock %}
+{% block description %}Новости регулирования и обзоры изменений, которые влияют на международный бизнес: лицензии, криптоактивы, реестры бенефициаров, налоги.{% endblock %}
+{% block content %}
+
+<section class="page-hero news-hero">
+  <div class="container">
+    <span class="eyebrow"><span class="t-ru">Новости</span><span class="t-en" hidden>News</span></span>
+    <h1 class="t-ru">Новости регулирования</h1>
+    <h1 class="t-en" hidden>Regulatory news</h1>
+    <p class="lede t-ru">Изменения законов и правил, которые касаются наших услуг, и что они значат для бизнеса. Материалы информационные и не заменяют консультацию.</p>
+    <p class="lede t-en" hidden>Changes in laws and rules that affect our services, and what they mean for business. For information only, not a substitute for legal advice.</p>
+  </div>
+</section>
+
+<section data-eyebrow-ru="Новости" data-eyebrow-en="News">
+  <div class="container">
+    {% if items %}
+    <div class="materials-grid reveal">
+      {% for n in items %}
+      <a href="{{ url_for('news_detail', slug=n.slug) }}" class="material-card">
+        <div class="material-card-body">
+          <span class="material-date">{{ n.published_at.strftime('%d.%m.%Y') }}</span>
+          <h3 class="t-ru">{{ n.title }}</h3>
+          <h3 class="t-en" hidden>{{ n.title_en or n.title }}</h3>
+          <p class="t-ru">{{ n.excerpt }}</p>
+          <p class="t-en" hidden>{{ n.excerpt_en or n.excerpt }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="section-head center">
+      <p class="lede t-ru">Новости скоро появятся.</p>
+      <p class="lede t-en" hidden>News is coming soon.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

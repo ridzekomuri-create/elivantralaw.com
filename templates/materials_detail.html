@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}{{ item.title }} — ELIVANTRA LAW{% endblock %}
+{% block content %}
+
+<article>
+  <div class="container material-detail">
+    <a href="{{ url_for('materials') }}" class="material-back">
+      <span class="t-ru">← Все материалы</span><span class="t-en" hidden>← All materials</span>
+    </a>
+
+    <span class="eyebrow"><span class="t-ru">Материалы</span><span class="t-en" hidden>Materials</span></span>
+    <h1 class="t-ru">{{ item.title }}</h1>
+    <h1 class="t-en" hidden>{{ item.title_en or item.title }}</h1>
+    <p class="material-date">{{ item.created_at.strftime('%d.%m.%Y') }}</p>
+
+    {% if item.cover_image %}
+    <img class="material-cover" src="{{ url_for('static', filename='uploads/' + item.cover_image) }}" alt="">
+    {% endif %}
+
+    <div class="material-body t-ru">
+      {% for para in item.paragraphs %}
+      <p>{{ para }}</p>
+      {% endfor %}
+    </div>
+    <div class="material-body t-en" hidden>
+      {% for para in item.paragraphs_en %}
+      <p>{{ para }}</p>
+      {% endfor %}
+    </div>
+  </div>
+</article>
+
+<section class="section-mint">
+  <div class="container" style="text-align:center;">
+    <div class="section-head center reveal">
+      <span class="eyebrow" style="justify-content:center"><span class="t-ru">Начать работу</span><span class="t-en" hidden>Get started</span></span>
+      <h2 class="t-ru">Готовы обсудить вашу задачу?</h2>
+      <h2 class="t-en" hidden>Ready to discuss your task?</h2>
+    </div>
+    <a href="{{ url_for('home') }}#contact" class="btn btn-primary reveal">
+      <span class="t-ru">Обсудить проект</span><span class="t-en" hidden>Discuss a project</span>
+    </a>
+  </div>
+</section>
+
+{% endblock %}

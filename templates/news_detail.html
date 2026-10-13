@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}{{ item.title }} — ELIVANTRA LAW{% endblock %}
+{% block description %}{{ item.excerpt }}{% endblock %}
+{% block content %}
+
+{% set related = services|selectattr('slug', 'equalto', item.service_slug)|first if item.service_slug else none %}
+
+<article>
+  <div class="container material-detail">
+    <a href="{{ url_for('news_list') }}" class="material-back">
+      <span class="t-ru">← Все новости</span><span class="t-en" hidden>← All news</span>
+    </a>
+
+    <span class="eyebrow"><span class="t-ru">Новости</span><span class="t-en" hidden>News</span></span>
+    <h1 class="t-ru">{{ item.title }}</h1>
+    <h1 class="t-en" hidden>{{ item.title_en or item.title }}</h1>
+    <p class="material-date">{{ item.published_at.strftime('%d.%m.%Y') }}</p>
+
+    <div class="material-body t-ru">
+      {% for para in item.paragraphs %}
+      <p>{{ para }}</p>
+      {% endfor %}
+      {% if item.source_url %}
+      <p class="news-source">Источник: <a href="{{ item.source_url }}" target="_blank" rel="noopener">{{ item.source_name }}</a></p>
+      {% endif %}
+    </div>
+    <div class="material-body t-en" hidden>
+      {% for para in item.paragraphs_en %}
+      <p>{{ para }}</p>
+      {% endfor %}
+      {% if item.source_url %}
+      <p class="news-source">Source: <a href="{{ item.source_url }}" target="_blank" rel="noopener">{{ item.source_name }}</a></p>
+      {% endif %}
+    </div>
+  </div>
+</article>
+
+<section class="section-mint">
+  <div class="container" style="text-align:center;">
+    <div class="section-head center reveal">
+      <span class="eyebrow" style="justify-content:center"><span class="t-ru">Начать работу</span><span class="t-en" hidden>Get started</span></span>
+      <h2 class="t-ru">Как это касается вашего бизнеса?</h2>
+      <h2 class="t-en" hidden>How does this affect your business?</h2>
+    </div>
+    <div class="news-cta reveal">
+      {% if related %}
+      <a href="{{ url_for('services') }}#{{ related.slug }}" class="btn btn-ghost">
+        <span class="t-ru">Связанная услуга: {{ related.title }}</span><span class="t-en" hidden>Related service: {{ related.title_en or related.title }}</span>
+      </a>
+      {% endif %}
+      <a href="{{ url_for('home') }}#contact" class="btn btn-primary">
+        <span class="t-ru">Обсудить проект</span><span class="t-en" hidden>Discuss a project</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

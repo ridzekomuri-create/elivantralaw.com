@@ -1,0 +1,26 @@
+{% extends "admin/base_admin.html" %}
+{% block content %}
+<div class="admin-header">
+  <div>
+    <h1>Обзор</h1>
+    <p>Управление содержимым сайта Elivantra Law.</p>
+  </div>
+</div>
+
+<div class="stat-grid">
+  <div class="stat-card">
+    <div class="num">{{ services_count }}</div>
+    <div class="label">Услуг на сайте</div>
+  </div>
+  <div class="stat-card">
+    <div class="num">{{ pages_count }}</div>
+    <div class="label">Страниц / материалов</div>
+  </div>
+</div>
+
+<div class="card">
+  <p style="margin:0 0 14px; color: var(--a-text-soft);">С чего начать:</p>
+  <p style="margin:0 0 10px;"><a href="{{ url_for('admin.services_list') }}"><b>Услуги</b></a> — карточки на главной странице и полные описания на странице «Все услуги».</p>
+  <p style="margin:0;"><a href="{{ url_for('admin.pages_list') }}"><b>Страницы / Материалы</b></a> — произвольные статьи, новости или разделы, которые появляются в разделе «Материалы» на сайте.</p>
+</div>
+{% endblock %}

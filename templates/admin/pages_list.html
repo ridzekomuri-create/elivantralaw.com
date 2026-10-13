@@ -1,0 +1,45 @@
+{% extends "admin/base_admin.html" %}
+{% block content %}
+<div class="admin-header">
+  <div>
+    <h1>Страницы / Материалы</h1>
+    <p>Появляются в разделе «Материалы» на сайте — можно добавлять сколько угодно.</p>
+  </div>
+  <a href="{{ url_for('admin.page_new') }}" class="btn">+ Добавить страницу</a>
+</div>
+
+<div class="card" style="padding:0;">
+  {% if items %}
+  <table>
+    <thead>
+      <tr><th></th><th>Заголовок (RU)</th><th>Статус</th><th>Создано</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for p in items %}
+      <tr>
+        <td>
+          {% if p.cover_image %}
+          <img class="thumb" src="{{ url_for('static', filename='uploads/' + p.cover_image) }}" alt="">
+          {% else %}
+          <div class="thumb"></div>
+          {% endif %}
+        </td>
+        <td>{{ p.title }}</td>
+        <td><span class="badge {{ 'on' if p.published else 'off' }}">{{ 'Опубликовано' if p.published else 'Черновик' }}</span></td>
+        <td style="color:var(--a-text-soft)">{{ p.created_at.strftime('%d.%m.%Y') }}</td>
+        <td class="actions">
+          <a href="{{ url_for('material_detail', slug=p.slug) }}" target="_blank" class="btn btn-outline btn-small">Смотреть</a>
+          <a href="{{ url_for('admin.page_edit', page_id=p.id) }}" class="btn btn-outline btn-small">Изменить</a>
+          <form method="post" action="{{ url_for('admin.page_delete', page_id=p.id) }}" onsubmit="return confirm('Удалить страницу «' + {{ p.title|tojson }} + '»?');">
+            <button type="submit" class="btn btn-danger btn-small">Удалить</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">Пока нет ни одной страницы.</div>
+  {% endif %}
+</div>
+{% endblock %}

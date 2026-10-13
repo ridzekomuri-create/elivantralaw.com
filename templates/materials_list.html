@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Materials — ELIVANTRA LAW{% endblock %}
+{% block content %}
+
+<section class="page-hero" style="background: var(--navy); padding: 168px 0 90px;">
+  <div class="container">
+    <span class="eyebrow"><span class="t-ru">Материалы</span><span class="t-en" hidden>Materials</span></span>
+    <h1 class="t-ru">Новости и материалы компании</h1>
+    <h1 class="t-en" hidden>Company news and materials</h1>
+    <p class="lede t-ru">Обновления практики, разборы кейсов и новости, которые важны для международного бизнеса.</p>
+    <p class="lede t-en" hidden>Practice updates, case studies and news relevant to international business.</p>
+  </div>
+</section>
+
+<section data-eyebrow-ru="Материалы" data-eyebrow-en="Materials">
+  <div class="container">
+    {% if items %}
+    <div class="materials-grid reveal">
+      {% for p in items %}
+      <a href="{{ url_for('material_detail', slug=p.slug) }}" class="material-card">
+        <div class="material-card-media">
+          {% if p.cover_image %}
+          <img src="{{ url_for('static', filename='uploads/' + p.cover_image) }}" alt="">
+          {% endif %}
+        </div>
+        <div class="material-card-body">
+          <span class="material-date">{{ p.created_at.strftime('%d.%m.%Y') }}</span>
+          <h3 class="t-ru">{{ p.title }}</h3>
+          <h3 class="t-en" hidden>{{ p.title_en or p.title }}</h3>
+          <p class="t-ru">{{ p.excerpt }}</p>
+          <p class="t-en" hidden>{{ p.excerpt_en or p.excerpt }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="section-head center">
+      <p class="lede t-ru">Материалы скоро появятся.</p>
+      <p class="lede t-en" hidden>Materials are coming soon.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

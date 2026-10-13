@@ -1,0 +1,76 @@
+{% extends "admin/base_admin.html" %}
+{% block content %}
+<div class="admin-header">
+  <div>
+    <h1>{{ 'Редактировать страницу' if item else 'Новая страница' }}</h1>
+    <p>Абзацы разделяйте пустой строкой — так текст разобьётся на параграфы.</p>
+  </div>
+  <a href="{{ url_for('admin.pages_list') }}" class="btn btn-outline">← К списку</a>
+</div>
+
+<form method="post" enctype="multipart/form-data" class="card">
+  <div class="section-title">Основное</div>
+  <div class="form-grid two">
+    <div class="field">
+      <label for="slug">Slug (латиницей, для адреса /materials/...)</label>
+      <input type="text" id="slug" name="slug" value="{{ item.slug if item else '' }}" placeholder="novaya-litsenziya-2026" required>
+    </div>
+    <div class="field checkbox" style="margin-top:26px;">
+      <input type="checkbox" id="published" name="published" {{ 'checked' if (item is none) or item.published }}>
+      <label for="published">Опубликовано (видно на сайте)</label>
+    </div>
+  </div>
+
+  <div class="section-title">Обложка</div>
+  <div class="form-grid two">
+    <div class="field">
+      <label for="cover_image">Изображение (JPG / PNG / WEBP)</label>
+      <input type="file" id="cover_image" name="cover_image" accept=".jpg,.jpeg,.png,.webp">
+      {% if item and item.cover_image %}
+      <span class="hint">Сейчас: {{ item.cover_image }} — выберите новый файл, чтобы заменить.</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="section-title">Заголовок</div>
+  <div class="form-grid two">
+    <div class="field">
+      <label for="title">Заголовок (RU)</label>
+      <input type="text" id="title" name="title" value="{{ item.title if item else '' }}" required>
+    </div>
+    <div class="field">
+      <label for="title_en">Заголовок (EN)</label>
+      <input type="text" id="title_en" name="title_en" value="{{ item.title_en if item else '' }}">
+    </div>
+  </div>
+
+  <div class="section-title">Краткое описание (для карточки в списке)</div>
+  <div class="form-grid two">
+    <div class="field">
+      <label for="excerpt">Краткое описание (RU)</label>
+      <textarea id="excerpt" name="excerpt" rows="3">{{ item.excerpt if item else '' }}</textarea>
+    </div>
+    <div class="field">
+      <label for="excerpt_en">Краткое описание (EN)</label>
+      <textarea id="excerpt_en" name="excerpt_en" rows="3">{{ item.excerpt_en if item else '' }}</textarea>
+    </div>
+  </div>
+
+  <div class="section-title">Текст страницы</div>
+  <div class="form-grid two">
+    <div class="field">
+      <label for="content">Текст (RU)</label>
+      <textarea id="content" name="content" rows="12">{{ item.content if item else '' }}</textarea>
+    </div>
+    <div class="field">
+      <label for="content_en">Текст (EN)</label>
+      <textarea id="content_en" name="content_en" rows="12">{{ item.content_en if item else '' }}</textarea>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn">Сохранить</button>
+    <a href="{{ url_for('admin.pages_list') }}" class="btn btn-outline">Отмена</a>
+  </div>
+</form>
+{% endblock %}

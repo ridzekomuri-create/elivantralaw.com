@@ -1,0 +1,37 @@
+{% extends "admin/base_admin.html" %}
+{% block content %}
+<div class="admin-header">
+  <div>
+    <h1>Услуги</h1>
+    <p>Показываются на главной странице и на странице «Все услуги», в порядке номера.</p>
+  </div>
+  <a href="{{ url_for('admin.service_new') }}" class="btn">+ Добавить услугу</a>
+</div>
+
+<div class="card" style="padding:0;">
+  {% if items %}
+  <table>
+    <thead>
+      <tr><th>#</th><th>Название (RU)</th><th>Название (EN)</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for s in items %}
+      <tr>
+        <td>{{ s.sort_order }}</td>
+        <td>{{ s.title }}</td>
+        <td style="color:var(--a-text-soft)">{{ s.title_en }}</td>
+        <td class="actions">
+          <a href="{{ url_for('admin.service_edit', service_id=s.id) }}" class="btn btn-outline btn-small">Изменить</a>
+          <form method="post" action="{{ url_for('admin.service_delete', service_id=s.id) }}" onsubmit="return confirm('Удалить услугу «' + {{ s.title|tojson }} + '»?');">
+            <button type="submit" class="btn btn-danger btn-small">Удалить</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">Пока нет ни одной услуги.</div>
+  {% endif %}
+</div>
+{% endblock %}

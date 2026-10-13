@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Админ-панель — Elivantra Law{% endblock %}</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+<div class="admin-shell">
+  <nav class="admin-nav">
+    <div class="brand">ELIVANTRA <b>ADMIN</b></div>
+    <a href="{{ url_for('admin.dashboard') }}" class="{{ 'active' if request.endpoint == 'admin.dashboard' }}">Обзор</a>
+    <a href="{{ url_for('admin.services_list') }}" class="{{ 'active' if request.endpoint and request.endpoint.startswith('admin.service') }}">Услуги</a>
+    <a href="{{ url_for('admin.pages_list') }}" class="{{ 'active' if request.endpoint and request.endpoint.startswith('admin.page') }}">Страницы / Материалы</a>
+    <a href="{{ url_for('admin.reviews_list') }}" class="{{ 'active' if request.endpoint and request.endpoint.startswith('admin.review') }}">Отзывы</a>
+    <a href="{{ url_for('admin.stats') }}" class="{{ 'active' if request.endpoint == 'admin.stats' }}">Статистика</a>
+    <div class="spacer"></div>
+    <a href="{{ url_for('home') }}" class="view-site" target="_blank">Открыть сайт ↗</a>
+    <a href="{{ url_for('admin.logout') }}">Выйти</a>
+  </nav>
+  <main class="admin-main">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,344 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-copy reveal">
+      <span class="eyebrow">Global Legal &amp; Corporate Advisory</span>
+
+      <h1 class="t-ru">Юридическая&nbsp;архитектура<br>для бизнеса без&nbsp;границ<em>.</em></h1>
+      <h1 class="t-en" hidden>Legal&nbsp;architecture<br>for business without&nbsp;borders<em>.</em></h1>
+
+      <p class="lede t-ru"><b>ELIVANTRA LAW</b> сопровождает предпринимателей и инвесторов на каждом этапе — от структурирования компании до открытия счетов и комплексного налогового консалтинга в юрисдикциях по всему миру.</p>
+      <p class="lede t-en" hidden><b>ELIVANTRA LAW</b> guides entrepreneurs and investors through every stage — from company structuring to opening accounts and comprehensive tax advisory across jurisdictions worldwide.</p>
+
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary"><span class="t-ru">Обсудить проект</span><span class="t-en" hidden>Discuss a project</span></a>
+        <a href="#services" class="btn btn-ghost"><span class="t-ru">Смотреть услуги</span><span class="t-en" hidden>View services</span></a>
+      </div>
+
+      <div class="trust-strip on-hero">
+        {% for t in trust %}
+        <div class="trust-item">
+          <span class="trust-icon">{{ t.icon | safe }}</span>
+          <span class="t-label t-ru">{{ t.ru }}</span>
+          <span class="t-label t-en" hidden>{{ t.en }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" data-eyebrow-ru="О компании" data-eyebrow-en="About us">
+  <div class="container">
+    <div class="about-media reveal">
+      <img src="{{ url_for('static', filename='img/about-photo.jpg') }}" alt="Партнёр Elivantra Law представляет анализ рисков команде клиента">
+    </div>
+    <div class="about-card reveal">
+      <span class="eyebrow">
+        <span class="t-ru">О компании</span><span class="t-en" hidden>About us</span>
+      </span>
+
+      <p class="lede about-intro t-ru">Мы — международная юридическая консультационная компания, специализирующаяся на комплексном сопровождении бизнеса за рубежом.</p>
+      <p class="lede about-intro t-en" hidden>We are an international legal advisory firm specializing in comprehensive support for business abroad.</p>
+
+      <p class="t-ru">Работаем с предпринимателями, инвесторами и командами, которым важны точность, конфиденциальность и стратегический подход. Наша практика охватывает международное структурирование, лицензирование в сфере азартных игр и блокчейн-индустрии, открытие банковских счетов и due diligence сделок.</p>
+      <p class="t-en" hidden>We work with entrepreneurs, investors and teams who value precision, confidentiality and a strategic approach. Our practice spans international structuring, gambling and blockchain licensing, bank account opening and transaction due diligence.</p>
+
+      <p class="t-ru">Мы говорим на языке бизнеса и права одновременно — и помогаем принимать решения, которые выдерживают проверку временем, регуляторами и партнёрами по сделке.</p>
+      <p class="t-en" hidden>We speak the language of business and law at once — helping you make decisions that stand up to time, regulators and deal partners.</p>
+
+      <div class="about-values">
+        <div class="value-item">
+          <h3 class="t-ru">Экспертиза без границ</h3>
+          <h3 class="t-en" hidden>Borderless expertise</h3>
+          <p class="t-ru">Работа с юрисдикциями Европы, Азии, Ближнего Востока и оффшорными зонами.</p>
+          <p class="t-en" hidden>Active practice across Europe, Asia, the Middle East and offshore jurisdictions.</p>
+        </div>
+        <div class="value-item">
+          <h3 class="t-ru">Личное сопровождение</h3>
+          <h3 class="t-en" hidden>Personal partnership</h3>
+          <p class="t-ru">Один ответственный партнёр ведёт проект от первой встречи до результата.</p>
+          <p class="t-en" hidden>One dedicated partner leads your project from the first meeting to the result.</p>
+        </div>
+        <div class="value-item">
+          <h3 class="t-ru">Отраслевая специализация</h3>
+          <h3 class="t-en" hidden>Sector specialization</h3>
+          <p class="t-ru">Глубокое понимание гемблинга, криптовалют и высокорисковых индустрий.</p>
+          <p class="t-en" hidden>Deep expertise in gambling, crypto and other high-risk industries.</p>
+        </div>
+        <div class="value-item">
+          <h3 class="t-ru">Конфиденциальность</h3>
+          <h3 class="t-en" hidden>Confidentiality</h3>
+          <p class="t-ru">Строгие стандарты защиты информации клиентов и бенефициаров.</p>
+          <p class="t-en" hidden>Strict standards for protecting client and beneficiary information.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="section-mint" data-eyebrow-ru="Услуги" data-eyebrow-en="Services">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow" style="justify-content:center">
+        <span class="t-ru">Услуги</span><span class="t-en" hidden>Services</span>
+      </span>
+      <h2 class="t-ru">Практики, закрывающие полный цикл&nbsp;задач</h2>
+      <h2 class="t-en" hidden>Practices covering the full cycle of your&nbsp;needs</h2>
+      <p class="lede t-ru">От первой регистрации компании до сопровождения сложных международных сделок — работаем как единая юридическая функция вашего бизнеса.</p>
+      <p class="lede t-en" hidden>From your first company registration to complex international deals — we act as your business's unified legal function.</p>
+    </div>
+
+    <div class="services-grid reveal">
+      {% for s in services %}
+      <a class="service-card" href="{{ url_for('services') }}#{{ s.slug }}">
+        <span class="num">0{{ loop.index }}</span>
+        <div class="icon" style="color:var(--gold)">{{ icons.get(s.icon, icons['globe']) | safe }}</div>
+        <h3 class="t-ru">{{ s.title }}</h3>
+        <h3 class="t-en" hidden>{{ s.title_en }}</h3>
+        <p class="t-ru">{{ s.short }}</p>
+        <p class="t-en" hidden>{{ s.short_en }}</p>
+        <span class="service-more">
+          <span class="t-ru">Подробнее</span><span class="t-en" hidden>More information</span>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 10h12M11 5l5 5-5 5"/></svg>
+        </span>
+      </a>
+      {% endfor %}
+    </div>
+
+    <div class="services-more reveal">
+      <a href="{{ url_for('services') }}" class="btn btn-primary">
+        <span class="t-ru">Все услуги подробно</span><span class="t-en" hidden>Explore all services</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="quote-banner">
+  <div class="container reveal">
+    <blockquote class="t-ru">«Хорошая юридическая структура не заметна в моменте — она становится очевидной, когда бизнес проходит проверку временем.»</blockquote>
+    <blockquote class="t-en" hidden>&laquo;A sound legal structure goes unnoticed in the moment — it becomes obvious once a business stands the test of time.&raquo;</blockquote>
+    <cite>Elivantra Law</cite>
+  </div>
+</section>
+
+<section class="stance-banner" data-eyebrow-ru="Принципы" data-eyebrow-en="Principles">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="t-ru">Принципы</span><span class="t-en" hidden>Principles</span></span>
+      <h2 class="t-ru">Чего мы не&nbsp;делаем</h2>
+      <h2 class="t-en" hidden>What we don't&nbsp;do</h2>
+      <p class="lede t-ru">Короче списка услуг — и полезнее его.</p>
+      <p class="lede t-en" hidden>Shorter than our list of services — and more useful.</p>
+    </div>
+
+    <div class="stance-grid reveal">
+      <div class="stance-item">
+        <span class="stance-x">×</span>
+        <div>
+          <h3 class="t-ru">Не гарантируем результат там, где решение — за регулятором</h3>
+          <h3 class="t-en" hidden>We don't guarantee outcomes that rest with a regulator</h3>
+          <p class="t-ru">Лицензии, одобрения банков и разрешения регуляторов выдаются по их усмотрению. Мы не обещаем то, что не в нашей власти, — только точную оценку шансов и честный план.</p>
+          <p class="t-en" hidden>Licenses, bank approvals and regulatory permissions are granted at their discretion. We won't promise what isn't ours to promise — only an accurate assessment of your chances and an honest plan.</p>
+        </div>
+      </div>
+      <div class="stance-item">
+        <span class="stance-x">×</span>
+        <div>
+          <h3 class="t-ru">Не строим структуры без реального содержания</h3>
+          <h3 class="t-en" hidden>We don't build structures without real substance</h3>
+          <p class="t-ru">Компания без объяснимой деловой цели и субстанса — это риск для банка, регулятора и в итоге для вас самих. Мы проектируем структуры, которые выдерживают проверку, а не только красиво выглядят на бумаге.</p>
+          <p class="t-en" hidden>A company with no explainable business purpose is a risk for the bank, the regulator, and ultimately for you. We design structures built to withstand scrutiny, not just look good on paper.</p>
+        </div>
+      </div>
+      <div class="stance-item">
+        <span class="stance-x">×</span>
+        <div>
+          <h3 class="t-ru">Не берёмся за проекты, которые не пройдут due diligence</h3>
+          <h3 class="t-en" hidden>We don't take on cases that won't survive due diligence</h3>
+          <p class="t-ru">Если источник средств или репутация не подтверждаются документально, мы скажем об этом до того, как вы потратите время и деньги, — а не после отказа банка или регулятора.</p>
+          <p class="t-en" hidden>If the source of funds or reputation can't be documented, we'll tell you before you spend time and money — not after a bank or regulator says no.</p>
+        </div>
+      </div>
+      <div class="stance-item">
+        <span class="stance-x">×</span>
+        <div>
+          <h3 class="t-ru">Не размываем ответственность между посредниками</h3>
+          <h3 class="t-en" hidden>We don't split responsibility across intermediaries</h3>
+          <p class="t-ru">Договор, документы и коммуникация с регулятором остаются в одних руках — партнёра, который ведёт ваш проект, а не передаётся между подрядчиками.</p>
+          <p class="t-en" hidden>Contracts, documentation and regulator communication stay with one partner who runs your project — not handed between subcontractors.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-eyebrow-ru="Как мы работаем" data-eyebrow-en="How we work">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="t-ru">Как мы работаем</span><span class="t-en" hidden>How we work</span></span>
+      <h2 class="t-ru">Четыре шага до результата</h2>
+      <h2 class="t-en" hidden>Four steps to results</h2>
+    </div>
+    <div class="process-grid reveal">
+      <div class="process-step">
+        <span class="step-no">01</span>
+        <h3 class="t-ru">Диагностика задачи</h3>
+        <h3 class="t-en" hidden>Diagnosing the task</h3>
+        <p class="t-ru">Разбираем цели бизнеса, текущую структуру и ограничения — юрисдикционные, налоговые, репутационные.</p>
+        <p class="t-en" hidden>We break down business goals, the current structure, and constraints — jurisdictional, tax and reputational.</p>
+        <p class="process-promise t-ru">Оценка — в письменном виде, до начала работы.</p>
+        <p class="process-promise t-en" hidden>The assessment is written, before any work begins.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-no">02</span>
+        <h3 class="t-ru">Проектирование решения</h3>
+        <h3 class="t-en" hidden>Designing the solution</h3>
+        <p class="t-ru">Предлагаем структуру, юрисдикции и план действий с оценкой сроков, стоимости и рисков.</p>
+        <p class="t-en" hidden>We propose a structure, jurisdictions and an action plan with timelines, cost and risk assessed.</p>
+        <p class="process-promise t-ru">Стоимость и сроки фиксируются заранее.</p>
+        <p class="process-promise t-en" hidden>Cost and timeline are agreed upfront.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-no">03</span>
+        <h3 class="t-ru">Реализация</h3>
+        <h3 class="t-en" hidden>Implementation</h3>
+        <p class="t-ru">Берём на себя регистрацию, лицензирование, открытие счетов и всю сопутствующую документацию.</p>
+        <p class="t-en" hidden>We handle registration, licensing, account opening and all related documentation.</p>
+        <p class="process-promise t-ru">Один и тот же партнёр — от начала до результата.</p>
+        <p class="process-promise t-en" hidden>The same partner, from start to result.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-no">04</span>
+        <h3 class="t-ru">Сопровождение</h3>
+        <h3 class="t-en" hidden>Ongoing support</h3>
+        <p class="t-ru">Остаёмся на связи как постоянный юридический партнёр — от отчётности до новых сделок.</p>
+        <p class="t-en" hidden>We stay on as your standing legal partner — from reporting to new deals.</p>
+        <p class="process-promise t-ru">Если что-то не подходит — скажем это честно.</p>
+        <p class="process-promise t-en" hidden>If something doesn't fit, we'll say so honestly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reviews" data-eyebrow-ru="Отзывы" data-eyebrow-en="Reviews">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow" style="justify-content:center"><span class="t-ru">Отзывы</span><span class="t-en" hidden>Reviews</span></span>
+      <h2 class="t-ru">Что говорят&nbsp;клиенты</h2>
+      <h2 class="t-en" hidden>What clients&nbsp;say</h2>
+    </div>
+
+    <div class="reviews-layout">
+      <div class="reviews-list reveal">
+        {% for r in reviews %}
+        <article class="review-card">
+          <p class="review-text">&ldquo;{{ r.text }}&rdquo;</p>
+          <div class="review-author">
+            <strong>{{ r.name }}</strong>
+            {% if r.country %}<span>{{ r.country }}</span>{% endif %}
+          </div>
+        </article>
+        {% else %}
+        <p class="reviews-empty t-ru">Отзывов пока нет. Станьте первым, кто поделится опытом работы с нами.</p>
+        <p class="reviews-empty t-en" hidden>No reviews yet. Be the first to share your experience with us.</p>
+        {% endfor %}
+      </div>
+
+      <form class="contact-form review-form reveal" id="reviewForm" novalidate>
+        <h3 class="review-form-title">
+          <span class="t-ru">Вам понравилось сотрудничество?</span><span class="t-en" hidden>Enjoyed working with us?</span>
+          <em class="t-ru">Оставьте отзыв</em><em class="t-en" hidden>Leave a review</em>
+        </h3>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="reviewName"><span class="t-ru">Имя</span><span class="t-en" hidden>Name</span></label>
+            <input id="reviewName" name="name" type="text" maxlength="120" required>
+          </div>
+          <div class="form-field">
+            <label for="reviewCountry"><span class="t-ru">Страна</span><span class="t-en" hidden>Country</span></label>
+            <input id="reviewCountry" name="country" type="text" maxlength="80">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field full">
+            <label for="reviewText"><span class="t-ru">Ваш отзыв</span><span class="t-en" hidden>Your review</span></label>
+            <textarea id="reviewText" name="text" rows="5" maxlength="1000" required></textarea>
+          </div>
+        </div>
+        <div class="hp" aria-hidden="true">
+          <label>Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+        </div>
+        <button type="submit" class="btn btn-primary"><span class="t-ru">Оставить отзыв</span><span class="t-en" hidden>Leave a review</span></button>
+        <p class="form-status" id="reviewStatus" role="status" aria-live="polite"></p>
+        <p class="form-note t-ru">Отзыв появится на сайте после проверки. Имя и страна публикуются, если вы их указали.</p>
+        <p class="form-note t-en" hidden>Your review appears on the site after a check. Your name and country are shown if you provide them.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section-mint" data-eyebrow-ru="Контакты" data-eyebrow-en="Contact">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow" style="justify-content:center"><span class="t-ru">Обсудить проект</span><span class="t-en" hidden>Discuss a project</span></span>
+      <h2 class="t-ru">Обсудим вашу&nbsp;задачу</h2>
+      <h2 class="t-en" hidden>Let's discuss your&nbsp;task</h2>
+      <p class="lede t-ru">Расскажите коротко о бизнесе и цели — партнёр компании свяжется с вами, чтобы предложить решение.</p>
+      <p class="lede t-en" hidden>Tell us briefly about your business and goal — a partner will reach out with a proposed solution.</p>
+    </div>
+
+    <div class="response-time reveal">
+      <span class="response-badge"><span class="t-ru">Время ответа — до 15 минут</span><span class="t-en" hidden>Response time — up to 15 minutes</span></span>
+      <ol class="next-steps">
+        <li><span class="t-ru">Оставляете заявку</span><span class="t-en" hidden>You send a request</span></li>
+        <li><span class="t-ru">Мы отвечаем до 15 минут</span><span class="t-en" hidden>We reply within 15 minutes</span></li>
+        <li><span class="t-ru">Согласуем созвон и задачу</span><span class="t-en" hidden>We agree on a call and the task</span></li>
+      </ol>
+    </div>
+
+    <div class="contact-wrap">
+      <form class="contact-form reveal" id="contactForm" novalidate>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="name"><span class="t-ru">Имя</span><span class="t-en" hidden>Name</span></label>
+            <input id="name" name="name" type="text" required>
+          </div>
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field full">
+            <label for="topic"><span class="t-ru">Интересующая услуга</span><span class="t-en" hidden>Service of interest</span></label>
+            <select id="topic" name="topic">
+              {% for s in services %}
+              <option class="t-ru" value="{{ s.title }}" data-slug="{{ s.slug }}">{{ s.title }}</option>
+              {% endfor %}
+              <option class="t-ru" value="Другое">Другое</option>
+              {% for s in services %}
+              <option class="t-en" hidden value="{{ s.title_en }}" data-slug="{{ s.slug }}">{{ s.title_en }}</option>
+              {% endfor %}
+              <option class="t-en" hidden value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field full">
+            <label for="message"><span class="t-ru">Сообщение</span><span class="t-en" hidden>Message</span></label>
+            <textarea id="message" name="message" rows="4"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary"><span class="t-ru">Отправить запрос</span><span class="t-en" hidden>Send request</span></button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        <p class="form-note t-ru">Нажимая «Отправить», вы соглашаетесь на обработку персональных данных.</p>
+        <p class="form-note t-en" hidden>By clicking &ldquo;Send&rdquo;, you agree to the processing of your personal data.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

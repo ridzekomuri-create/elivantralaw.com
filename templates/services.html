@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Services — ELIVANTRA LAW{% endblock %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow"><span class="t-ru">Практики</span><span class="t-en" hidden>Practices</span></span>
+
+    <h1 class="t-ru">Полный цикл юридического сопровождения международного&nbsp;бизнеса</h1>
+    <h1 class="t-en" hidden>Full-cycle legal support for international&nbsp;business</h1>
+
+    <p class="lede t-ru">Восемь направлений практики, которые закрывают путь бизнеса от идеи и регистрации до сделок, лицензирования и ежедневного комплаенса.</p>
+    <p class="lede t-en" hidden>Eight practice areas covering a business's path from idea and registration to deals, licensing and everyday compliance.</p>
+  </div>
+</section>
+
+<section data-eyebrow-ru="Практики" data-eyebrow-en="Practices">
+  <div class="container">
+    <div class="services-list">
+      {% for s in services %}
+      <div class="service-row reveal" id="{{ s.slug }}">
+        <div class="row-num">0{{ loop.index }}</div>
+        <div>
+          <div class="icon" style="color:var(--gold); width:36px; height:36px; margin-bottom:16px;">{{ icons.get(s.icon, icons['globe']) | safe }}</div>
+          <h3 class="t-ru">{{ s.title }}</h3>
+          <h3 class="t-en" hidden>{{ s.title_en }}</h3>
+        </div>
+        <div>
+          <p class="t-ru">{{ s.text }}</p>
+          <p class="t-en" hidden>{{ s.text_en }}</p>
+          <ul class="row-list t-ru">
+            {% for point in s.points %}
+            <li>{{ point }}</li>
+            {% endfor %}
+          </ul>
+          <ul class="row-list t-en" hidden>
+            {% for point in s.points_en %}
+            <li>{{ point }}</li>
+            {% endfor %}
+          </ul>
+          <a href="{{ url_for('home') }}?service={{ s.slug }}#contact" class="btn btn-primary service-select">
+            <span class="t-ru">Выбрать услугу</span><span class="t-en" hidden>Choose this service</span>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="quote-banner">
+  <div class="container reveal">
+    <blockquote class="t-ru">«Задача юриста — не усложнять бизнес, а сделать его решения предсказуемыми в любой юрисдикции.»</blockquote>
+    <blockquote class="t-en" hidden>&laquo;A lawyer's job isn't to complicate business — it's to make its decisions predictable in any jurisdiction.&raquo;</blockquote>
+    <cite>Elivantra Law</cite>
+  </div>
+</section>
+
+<section class="section-mint" data-eyebrow-ru="Начать работу" data-eyebrow-en="Get started">
+  <div class="container" style="text-align:center;">
+    <div class="section-head center reveal">
+      <span class="eyebrow" style="justify-content:center"><span class="t-ru">Начать работу</span><span class="t-en" hidden>Get started</span></span>
+      <h2 class="t-ru">Готовы обсудить вашу структуру?</h2>
+      <h2 class="t-en" hidden>Ready to discuss your structure?</h2>
+      <p class="lede t-ru">Опишите задачу — предложим решение и обозначим сроки на первой консультации.</p>
+      <p class="lede t-en" hidden>Describe your task — we'll propose a solution and timeline at the first consultation.</p>
+    </div>
+    <a href="{{ url_for('home') }}#contact" class="btn btn-primary reveal">
+      <span class="t-ru">Обсудить проект</span><span class="t-en" hidden>Discuss a project</span>
+    </a>
+  </div>
+</section>
+
+{% endblock %}

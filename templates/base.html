@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}ELIVANTRA LAW — international legal practice{% endblock %}</title>
+<meta name="description" content="{% block description %}ELIVANTRA LAW — международная юридическая и корпоративная консультация: структурирование бизнеса, лицензирование, банковские счета, due diligence и налоговый консалтинг.{% endblock %}">
+
+<script>
+(function () {
+  try {
+    var theme = localStorage.getItem("elivantra-theme");
+    var lang = localStorage.getItem("elivantra-lang");
+    if (theme === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    if (lang === "en") document.documentElement.setAttribute("data-lang", "en");
+  } catch (e) {}
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Frank+Ruhl+Libre:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32.png') }}">
+<link rel="apple-touch-icon" href="{{ url_for('static', filename='img/favicon-180.png') }}">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="{{ url_for('home') }}" class="brand">
+      <img class="brand-mark brand-mark-light" src="{{ url_for('static', filename='img/mark-light.png') }}" alt="Elivantra Law">
+      <img class="brand-mark brand-mark-dark" src="{{ url_for('static', filename='img/mark-dark.png') }}" alt="Elivantra Law">
+      <span class="brand-text">
+        <span class="name">ELIVANTRA <span style="color:var(--gold)">LAW</span></span>
+        <span class="tag">Global Legal &amp; Corporate Advisory</span>
+      </span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="{{ url_for('home') }}" data-home-link><span class="t-ru">Главная</span><span class="t-en" hidden>Home</span></a>
+      <a href="{{ url_for('home') }}#services"><span class="t-ru">Услуги</span><span class="t-en" hidden>Services</span></a>
+      <a href="{{ url_for('news_list') }}" class="{{ 'active' if request.endpoint and request.endpoint.startswith('news') else '' }}"><span class="t-ru">Новости</span><span class="t-en" hidden>News</span></a>
+      <a href="{{ url_for('contacts') }}" class="{{ 'active' if request.endpoint == 'contacts' else '' }}"><span class="t-ru">Контакты</span><span class="t-en" hidden>Contacts</span></a>
+    </nav>
+
+    <div class="nav-cta">
+      <a href="{{ url_for('home') }}#contact" class="btn btn-ghost">
+        <span class="t-ru">Обсудить проект</span><span class="t-en" hidden>Discuss a project</span>
+      </a>
+      <div class="controls">
+        <div class="lang-switch" id="langSwitch" role="group" aria-label="Language">
+          <button type="button" data-lang-btn="ru" class="is-active">RU</button>
+          <button type="button" data-lang-btn="en">EN</button>
+        </div>
+        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4 6.8 6.8 0 0 0 20 14.5Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7"/></svg>
+        </button>
+      </div>
+      <button class="nav-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="scroll-eyebrow" id="scrollEyebrow" aria-hidden="true">
+  <span class="line"></span>
+  <span class="t-ru"></span>
+  <span class="t-en" hidden></span>
+</div>
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand-block">
+        <div class="footer-brand">
+          <img src="{{ url_for('static', filename='img/mark-dark.png') }}" alt="Elivantra Law">
+          <span class="name">ELIVANTRA <b>LAW</b></span>
+        </div>
+        <p class="t-ru">Международная юридическая и корпоративная консультация для бизнеса, который работает за пределами одной юрисдикции.</p>
+        <p class="t-en" hidden>International legal and corporate advisory for businesses operating beyond a single jurisdiction.</p>
+      </div>
+      <div class="footer-col">
+        <h3><span class="t-ru">Навигация</span><span class="t-en" hidden>Navigation</span></h3>
+        <ul>
+          <li><a href="{{ url_for('home') }}" data-home-link><span class="t-ru">Главная</span><span class="t-en" hidden>Home</span></a></li>
+          <li><a href="{{ url_for('home') }}#services"><span class="t-ru">Услуги</span><span class="t-en" hidden>Services</span></a></li>
+          <li><a href="{{ url_for('news_list') }}"><span class="t-ru">Новости</span><span class="t-en" hidden>News</span></a></li>
+          <li><a href="{{ url_for('materials') }}"><span class="t-ru">Материалы</span><span class="t-en" hidden>Materials</span></a></li>
+          <li><a href="{{ url_for('home') }}#contact"><span class="t-ru">Контакты</span><span class="t-en" hidden>Contact</span></a></li>
+          <li><a href="{{ url_for('privacy') }}"><span class="t-ru">Политика конфиденциальности</span><span class="t-en" hidden>Privacy Policy</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3><span class="t-ru">Практики</span><span class="t-en" hidden>Practices</span></h3>
+        <ul>
+          <li><a href="{{ url_for('services') }}#structuring"><span class="t-ru">Структурирование бизнеса</span><span class="t-en" hidden>Business structuring</span></a></li>
+          <li><a href="{{ url_for('services') }}#banking"><span class="t-ru">Банковские счета</span><span class="t-en" hidden>Bank accounts</span></a></li>
+          <li><a href="{{ url_for('services') }}#blockchain"><span class="t-ru">Блокчейн и крипто</span><span class="t-en" hidden>Blockchain &amp; crypto</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3><span class="t-ru">Контакты</span><span class="t-en" hidden>Contact</span></h3>
+        <ul>
+          <li><a href="mailto:elivantralaw@gmail.com">elivantralaw@gmail.com</a></li>
+          <li>
+            <span class="t-ru">По записи, удалённо и очно</span>
+            <span class="t-en" hidden>By appointment, remote or in person</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span><span class="t-ru">© 2026 Elivantra Law. Все права защищены.</span><span class="t-en" hidden>© 2026 Elivantra Law. All rights reserved.</span></span>
+      <span class="footer-bottom-links">
+        <a href="{{ url_for('privacy') }}"><span class="t-ru">Политика конфиденциальности</span><span class="t-en" hidden>Privacy Policy</span></a>
+        <button type="button" class="link-btn" data-cookie-reset><span class="t-ru">Настройки cookie</span><span class="t-en" hidden>Cookie settings</span></button>
+      </span>
+    </div>
+  </div>
+</footer>
+
+{% if cookie_consent is none %}
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite">
+  <p>
+    <span class="t-ru">Мы используем cookie-файлы: необходимые — для работы сайта и, по вашему выбору, для анонимной статистики посещений. Подробнее — <a href="{{ url_for('privacy') }}">Политика конфиденциальности</a>.</span>
+    <span class="t-en" hidden>We use cookies: essential ones for the site to work and, if you agree, anonymous visit statistics. Details — <a href="{{ url_for('privacy') }}">Privacy Policy</a>.</span>
+  </p>
+  <div class="cookie-actions">
+    <button type="button" class="btn btn-ghost" data-cookie-choice="declined"><span class="t-ru">Только необходимые</span><span class="t-en" hidden>Essential only</span></button>
+    <button type="button" class="btn btn-primary" data-cookie-choice="accepted"><span class="t-ru">Принять все</span><span class="t-en" hidden>Accept all</span></button>
+  </div>
+</div>
+{% endif %}
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
