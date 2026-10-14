@@ -239,9 +239,20 @@ def contact():
     msg.set_content(body)
 
     try:
-        with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT) as server:
-            server.login(SMTP_USER, SMTP_PASSWORD)
-            server.send_message(msg)
+        # A hung connect() here used to run past gunicorn's worker timeout and
+        # take the whole worker down (SIGABRT/SIGKILL, no response at all).
+        # A short socket timeout turns that into a normal, catchable error.
+        if SMTP_PORT == 587:
+            # Port 587 = STARTTLS: connect in plaintext, then upgrade.
+            with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10) as server:
+                server.starttls()
+                server.login(SMTP_USER, SMTP_PASSWORD)
+                server.send_message(msg)
+        else:
+            # Port 465 (default) = implicit SSL from the start.
+            with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, timeout=10) as server:
+                server.login(SMTP_USER, SMTP_PASSWORD)
+                server.send_message(msg)
     except Exception:
         app.logger.exception("Failed to send contact form email")
         return jsonify({"ok": False, "error": "send_failed"}), 502
