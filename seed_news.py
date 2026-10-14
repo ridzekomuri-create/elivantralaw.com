@@ -1,9 +1,10 @@
 """Load the regulatory news articles into the database.
-Safe to re-run: existing articles are updated by slug, new ones are inserted."""
-from datetime import date
+Safe to re-run: existing articles are updated by slug, new ones are inserted.
 
-from app import app
-from models import News, db
+SEED_NEWS is also imported by app.py to auto-seed an empty database on
+startup (e.g. on hosts with an ephemeral filesystem) — that import must not
+pull in Flask app creation, so `app` and `db` are only imported inside run()."""
+from datetime import date
 
 SEED_NEWS = [
     {
@@ -166,6 +167,9 @@ SEED_NEWS = [
 
 
 def run():
+    from app import app
+    from models import News, db
+
     with app.app_context():
         db.create_all()
         for data in SEED_NEWS:

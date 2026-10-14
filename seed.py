@@ -1,7 +1,9 @@
 """Run once to create the database and load the original 8 services into it.
-Safe to re-run: it skips services whose slug already exists."""
-from app import app
-from models import Service, db
+Safe to re-run: it skips services whose slug already exists.
+
+SEED_SERVICES is also imported by app.py to auto-seed an empty database on
+startup (e.g. on hosts with an ephemeral filesystem) — that import must not
+pull in Flask app creation, so `app` and `db` are only imported inside run()."""
 
 SEED_SERVICES = [
     {
@@ -104,6 +106,9 @@ SEED_SERVICES = [
 
 
 def run():
+    from app import app
+    from models import Service, db
+
     with app.app_context():
         db.create_all()
         existing = {s.slug for s in Service.query.all()}

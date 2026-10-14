@@ -11,6 +11,8 @@ from flask import Flask, abort, jsonify, render_template, request
 from admin import admin_bp
 from constants import ICONS, TRUST
 from models import News, Page, PageView, Review, Service, db
+from seed import SEED_SERVICES
+from seed_news import SEED_NEWS
 
 load_dotenv()
 
@@ -27,6 +29,18 @@ app.register_blueprint(admin_bp)
 
 with app.app_context():
     db.create_all()
+
+    # Auto-seed services and news if the database is empty. This matters on
+    # hosts with an ephemeral filesystem (e.g. Render's free tier), where
+    # data.db is recreated empty on every deploy/restart — without this the
+    # site would come up with no services and no news every time.
+    if Service.query.count() == 0:
+        for i, data in enumerate(SEED_SERVICES):
+            db.session.add(Service(sort_order=i, **data))
+    if News.query.count() == 0:
+        for data in SEED_NEWS:
+            db.session.add(News(**data))
+    db.session.commit()
 
 SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
 SMTP_PORT = int(os.environ.get("SMTP_PORT", "465"))
