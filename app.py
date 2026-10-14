@@ -5,6 +5,7 @@ import uuid
 from email.message import EmailMessage
 from urllib.parse import urlparse
 
+import requests
 from dotenv import load_dotenv
 from flask import Flask, abort, jsonify, render_template, request
 
@@ -47,6 +48,14 @@ SMTP_PORT = int(os.environ.get("SMTP_PORT", "465"))
 SMTP_USER = os.environ.get("SMTP_USER")
 SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")
 CONTACT_TO_EMAIL = os.environ.get("CONTACT_TO_EMAIL", "elivantralaw@gmail.com")
+
+# Preferred delivery method: the Resend HTTPS API. Some hosts (Render's free
+# tier among them) block outbound SMTP entirely, so raw smtplib connections
+# to Gmail just hang and time out there. HTTPS is never blocked — the app
+# itself wouldn't work otherwise — so this is the reliable path in production.
+# Plain SMTP is kept as a fallback for local development, where it works fine.
+RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
+RESEND_FROM = os.environ.get("RESEND_FROM", "Elivantra Law <onboarding@resend.dev>")
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
@@ -110,6 +119,8 @@ def diag_env_check():
     # the actual values, so it's safe to hit from anywhere. Remove once the
     # SMTP configuration issue on the host is confirmed fixed.
     return jsonify({
+        "RESEND_API_KEY_set": bool(RESEND_API_KEY),
+        "RESEND_FROM": RESEND_FROM,
         "SMTP_HOST": SMTP_HOST,
         "SMTP_PORT": SMTP_PORT,
         "SMTP_USER_set": bool(SMTP_USER),
@@ -218,8 +229,9 @@ def contact():
     if not name or not email or not EMAIL_RE.match(email):
         return jsonify({"ok": False, "error": "invalid_input"}), 400
 
-    if not SMTP_USER or not SMTP_PASSWORD:
-        app.logger.error("Contact form submitted but SMTP_USER/SMTP_PASSWORD are not configured.")
+    if not RESEND_API_KEY and not (SMTP_USER and SMTP_PASSWORD):
+        app.logger.error("Contact form submitted but no email delivery method is configured "
+                          "(need RESEND_API_KEY, or SMTP_USER/SMTP_PASSWORD for local dev).")
         return jsonify({"ok": False, "error": "not_configured"}), 503
 
     subject = f"Заявка с сайта Elivantra Law — {topic or 'Без темы'}"
@@ -231,28 +243,38 @@ def contact():
         f"Сообщение:\n{message or '—'}\n"
     )
 
-    msg = EmailMessage()
-    msg["Subject"] = subject
-    msg["From"] = SMTP_USER
-    msg["To"] = CONTACT_TO_EMAIL
-    msg["Reply-To"] = email
-    msg.set_content(body)
-
     try:
-        # A hung connect() here used to run past gunicorn's worker timeout and
-        # take the whole worker down (SIGABRT/SIGKILL, no response at all).
-        # A short socket timeout turns that into a normal, catchable error.
-        if SMTP_PORT == 587:
-            # Port 587 = STARTTLS: connect in plaintext, then upgrade.
-            with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10) as server:
-                server.starttls()
-                server.login(SMTP_USER, SMTP_PASSWORD)
-                server.send_message(msg)
+        if RESEND_API_KEY:
+            resp = requests.post(
+                "https://api.resend.com/emails",
+                headers={"Authorization": f"Bearer {RESEND_API_KEY}"},
+                json={
+                    "from": RESEND_FROM,
+                    "to": [CONTACT_TO_EMAIL],
+                    "reply_to": email,
+                    "subject": subject,
+                    "text": body,
+                },
+                timeout=10,
+            )
+            resp.raise_for_status()
         else:
-            # Port 465 (default) = implicit SSL from the start.
-            with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, timeout=10) as server:
-                server.login(SMTP_USER, SMTP_PASSWORD)
-                server.send_message(msg)
+            # Local-dev fallback: plain Gmail SMTP (works fine outside Render).
+            msg = EmailMessage()
+            msg["Subject"] = subject
+            msg["From"] = SMTP_USER
+            msg["To"] = CONTACT_TO_EMAIL
+            msg["Reply-To"] = email
+            msg.set_content(body)
+            if SMTP_PORT == 587:
+                with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10) as server:
+                    server.starttls()
+                    server.login(SMTP_USER, SMTP_PASSWORD)
+                    server.send_message(msg)
+            else:
+                with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, timeout=10) as server:
+                    server.login(SMTP_USER, SMTP_PASSWORD)
+                    server.send_message(msg)
     except Exception:
         app.logger.exception("Failed to send contact form email")
         return jsonify({"ok": False, "error": "send_failed"}), 502
