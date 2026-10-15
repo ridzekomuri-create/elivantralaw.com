@@ -113,23 +113,6 @@ def track_pageview():
     db.session.commit()
 
 
-@app.route("/diag/env-check")
-def diag_env_check():
-    # Temporary: reports only whether each variable is set/non-empty, never
-    # the actual values, so it's safe to hit from anywhere. Remove once the
-    # SMTP configuration issue on the host is confirmed fixed.
-    return jsonify({
-        "RESEND_API_KEY_set": bool(RESEND_API_KEY),
-        "RESEND_FROM": RESEND_FROM,
-        "SMTP_HOST": SMTP_HOST,
-        "SMTP_PORT": SMTP_PORT,
-        "SMTP_USER_set": bool(SMTP_USER),
-        "SMTP_PASSWORD_set": bool(SMTP_PASSWORD),
-        "CONTACT_TO_EMAIL_set": bool(CONTACT_TO_EMAIL),
-        "ADMIN_PASSWORD_set": bool(app.config.get("ADMIN_PASSWORD")),
-    })
-
-
 @app.route("/cookie-consent", methods=["POST"])
 def cookie_consent():
     data = request.get_json(silent=True) or request.form
