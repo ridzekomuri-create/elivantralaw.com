@@ -51,8 +51,8 @@ SEED_SERVICES = [
         "short_en": "Company incorporation, nominee services, corporate administration and annual support.",
         "text": "Открываем компании в более чем 40 юрисдикциях под конкретную бизнес-задачу, готовим корпоративный пакет документов, обеспечиваем зарегистрированный офис и агента, ведём текущее корпоративное администрирование и отчётность.",
         "text_en": "We incorporate companies in 40+ jurisdictions tailored to the specific business task, prepare the corporate document package, provide a registered office and agent, and handle ongoing corporate administration and reporting.",
-        "points_raw": "Регистрация компаний в Европе, Азии, на Ближнем Востоке и в оффшорных зонах\nЗарегистрированный офис, агент, номинальный сервис\nКорпоративное администрирование и ежегодная отчётность\nПолучение необходимых разрешений и лицензий",
-        "points_en_raw": "Company registration across Europe, Asia, the Middle East and offshore zones\nRegistered office, agent and nominee services\nCorporate administration and annual reporting\nObtaining the required permits and licenses",
+        "points_raw": "Регистрация компаний в 40+ юрисдикциях по всему миру\nЗарегистрированный офис, агент, номинальный сервис\nКорпоративное администрирование и ежегодная отчётность\nПолучение необходимых разрешений и лицензий",
+        "points_en_raw": "Company registration across 40+ jurisdictions worldwide\nRegistered office, agent and nominee services\nCorporate administration and annual reporting\nObtaining the required permits and licenses",
     },
     {
         "slug": "banking",
